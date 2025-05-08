@@ -1,28 +1,35 @@
-import MainSlideShow from '@/presentation/components/MainSlideShow';
+import MainSlideShow from '@/presentation/components/movies/MainSlideShow';
+import MovieHorizontalList from '@/presentation/components/movies/MoviesHorizontalList';
 import { useMovies } from '@/presentation/hooks/useMovies';
 import { ActivityIndicator, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const HomeScreen = () => {
-    
+
     const safeArea = useSafeAreaInsets();
 
-    const { nowPlayingQuery } = useMovies();
+    const { nowPlayingQuery, popularQuery } = useMovies();
 
     if (nowPlayingQuery.isLoading) {
         return (
             <View className='justify-center items-center flex-1'>
                 <ActivityIndicator color='purple' size={40} />
             </View>
-        )    
+        )
     }
 
     return (
         <View className='mt-2' style={{ paddingTop: safeArea.top }}>
-            <Text className='text-3xl font-bold px-4 md-2'>Home Screen</Text>
+            <Text className='text-3xl font-bold px-4 md-2'>Movies App</Text>
 
-            { /* Carousel */ }
+            { /* Carousel */}
             <MainSlideShow movies={nowPlayingQuery.data ?? []} />
+
+            { /* Popular */}
+            <MovieHorizontalList
+                movies={popularQuery.data ?? []}
+                title='Populares' 
+            />
 
         </View>
     )
