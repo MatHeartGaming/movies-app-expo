@@ -1,3 +1,4 @@
+import MovieHeader from '@/presentation/components/movie/MovieHeader';
 import { useMovie } from '@/presentation/hooks/useMovie';
 import { useLocalSearchParams } from 'expo-router';
 import React from 'react';
@@ -10,7 +11,7 @@ const MovieScreen = () => {
 
     const { movieQuery } = useMovie(+id)
 
-    if(movieQuery.isLoading) {
+    if(movieQuery.isLoading || !movieQuery.data) {
         return (
             <View 
                 className='flex flex-1 justify-center items-center'
@@ -25,7 +26,11 @@ const MovieScreen = () => {
 
     return (
         <ScrollView>
-            <Text>{ movie?.title ?? 'No tiene' }</Text>
+            <MovieHeader
+                title={ movie.originalTitle }
+                originalTitle={ movie.title }
+                poster={ movie.poster }
+             />
         </ScrollView>
     )
 }
