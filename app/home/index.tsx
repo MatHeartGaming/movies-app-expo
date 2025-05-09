@@ -24,25 +24,30 @@ const HomeScreen = () => {
                 <Text className='text-3xl font-bold px-4 md-2'>Movies App</Text>
 
                 { /* Carousel */}
-                <MainSlideShow movies={nowPlayingQuery.data ?? []} />
+                <MainSlideShow 
+                    movies={nowPlayingQuery.data ?? []} 
+                />
 
                 { /* Popular */}
                 <MovieHorizontalList
                     className='mb-5'
-                    movies={popularQuery.data ?? []}
+                    movies={popularQuery.data?.pages.flat() ?? []}
                     title='Populares'
+                    loadNextPage={ popularQuery.fetchNextPage }
                 />
 
                 <MovieHorizontalList
                     className='mb-5'
-                    movies={topRatedQuery.data ?? []}
+                    movies={topRatedQuery.data?.pages.flat() ?? []}
                     title='Top Rated'
+                    loadNextPage={ topRatedQuery.fetchNextPage }
                 />
 
                 <MovieHorizontalList
                     className='mb-5'
-                    movies={upcomingQuery.data ?? []}
+                    movies={upcomingQuery.data?.pages.flat() ?? []}
                     title='Proximamente'
+                    loadNextPage={ upcomingQuery.fetchNextPage }
                 />
 
             </View>
